@@ -1,0 +1,39 @@
+﻿<div class="container">
+  <h1>☕ Szünet időzítő</h1>
+
+  <div class="timer-display" [class.finished]="isFinished()">
+    <span class="time">{{ display() }}</span>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="progress()"></div>
+  </div>
+
+  @if (isFinished()) {
+    <p class="finished-message">🎉 Vége a szünetnek! Vissza a munkába!</p>
+  }
+
+  <div class="duration-options">
+    <p>Szünet hossza (perc):</p>
+    <div class="options">
+      @for (option of breakOptions; track option) {
+        <button
+          class="option-btn"
+          [class.selected]="selectedMinutes() === option"
+          [disabled]="isRunning()"
+          (click)="selectDuration(option)"
+        >
+          {{ option }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="controls">
+    @if (!isRunning()) {
+      <button class="btn start" (click)="startTimer()">▶ Indítás</button>
+    } @else {
+      <button class="btn stop" (click)="stopTimer()">⏹ Leállítás</button>
+    }
+  </div>
+</div>
